@@ -2,4 +2,4 @@ all:
 
 checksum:
 	@echo "Checksumming files..."
-	scripts/gen-checksums.sh ./pkg
+	scripts/gen-checksums.sh pkg

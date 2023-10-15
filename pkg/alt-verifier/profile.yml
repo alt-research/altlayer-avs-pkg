@@ -41,7 +41,7 @@ options:
     default: 'https://s3.us-west-2.amazonaws.com/operator-public/chainspec/producer/default/rollupday/alt_instruction_runtime.compact.compressed.wasm'
     help: 'Instruction runtime WASM URL'
   - name: l1-chain-id
-    target: L1_CHAIN_ID
+    target: L1_CHAINID
     type: str
     default: '11155111'
     help: 'L1 chain ID'
@@ -58,11 +58,16 @@ options:
     target: L2_WS_ENDPOINT
     type: str
     help: 'L2 websocket endpoint'
-  - name: l1-contract
-    target: L1_CONTRACT
+  - name: l2-contract
+    target: L2_CONTRACT
     type: str
-    help: 'L1 contract address'
+    help: 'L2 contract address'
   - name: bootnodes
     target: BOOTNODES
     type: str
     help: 'Bootnodes separated by comma'
+  - name: 'log-level'
+    target: LOG_LEVEL
+    type: str
+    default: 'info'
+    help: 'Log level'
