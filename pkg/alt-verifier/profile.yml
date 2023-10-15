@@ -1,0 +1,68 @@
+monitoring:
+  targets:
+    - service: 'verifeir'
+      port: 9615
+      path: '/metrics'
+options:
+  - name: 'image'
+    target: IMAGE
+    type: str
+    validate:
+      re2_regex: "^(?:(?:[a-zA-Z0-9.-]+(?:\\:[0-9]+)?/)?[a-zA-Z0-9_-]+(?:/[a-zA-Z0-9_-]+)?(?:\\:[a-zA-Z0-9_.-]+)?)?$"
+    default: 'public.ecr.aws/altlayer/alt-verifier:rollup-day-demo-rc4'
+    help: 'Image repo:tag of alt-verifier'
+  - name: 'container-name'
+    target: CONTAINER_NAME
+    type: str
+    validate:
+      re2_regex: '^[a-zA-Z0-9]([-a-zA-Z0-9]*[a-zA-Z0-9])?$'
+    default: 'verifeir'
+    help: 'Verifeir container name'
+  - name: private-key
+    target: PRIVATE_KEY
+    type: str
+    validate:
+      re2_regex: '^0x[a-fA-F0-9]{64}$'
+    help: 'Private key'
+    hidden: true
+  - name: 'p2p-port'
+    target: P2P_PORT
+    type: port
+    default: 30333
+    help: 'P2P port of alt-verifier'
+  - name: chainspec-url
+    target: CHAINSPEC_URL
+    type: str
+    default: 'https://s3.us-west-2.amazonaws.com/operator-public/chainspec/producer/default/rollupday/chainspec.raw.json'
+    help: 'Chainspec URL'
+  - name: inst-wasm-url
+    target: INST_WASM_URL
+    type: str
+    default: 'https://s3.us-west-2.amazonaws.com/operator-public/chainspec/producer/default/rollupday/alt_instruction_runtime.compact.compressed.wasm'
+    help: 'Instruction runtime WASM URL'
+  - name: l1-chain-id
+    target: L1_CHAIN_ID
+    type: str
+    default: '11155111'
+    help: 'L1 chain ID'
+  - name: l1-endpoint
+    target: L1_ENDPOINT
+    type: str
+    default: https://rpc.sepolia.org
+    help: 'L1 endpoint'
+  - name: l1-contract
+    target: L1_CONTRACT
+    type: str
+    help: 'L1 contract address'
+  - name: l2-ws-endpoint
+    target: L2_WS_ENDPOINT
+    type: str
+    help: 'L2 websocket endpoint'
+  - name: l1-contract
+    target: L1_CONTRACT
+    type: str
+    help: 'L1 contract address'
+  - name: bootnodes
+    target: BOOTNODES
+    type: str
+    help: 'Bootnodes separated by comma'

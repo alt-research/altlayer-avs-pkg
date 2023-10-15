@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  main-service:
+    container_name: ${CONTAINER_NAME}
+    image: ${IMAGE}
+    environment:
+      - CONTAINER_NAME=${CONTAINER_NAME}
+      - P2P_PORT=${P2P_PORT}
+      - PRIVATE_KEY=${PRIVATE_KEY}
+      - CHAINSPEC_URL=${CHAINSPEC_URL}
+      - INST_WASM_URL=${INST_WASM_URL}
+      - L1_CHAINID=${L1_CHAINID}
+      - L1_ENDPOINT=${L1_ENDPOINT}
+      - L1_CONTRACT=${L1_CONTRACT}
+      - L2_CONTRACT=${L2_CONTRACT}
+      - L2_WS_ENDPOINT=${L2_WS_ENDPOINT}
+      - BOOTNODES=${BOOTNODES}
+    ports:
+      - "${P2P_PORT}:30333"
+    entrypoint: ["bash", "-c"]
+    command:
+      - |
+        [[ "$DEBUG" = "true" ]] && set -x
+        [[ ! -f $DATA/chainspec.raw.json ]] && wget $CHAINSPEC_URL -O $DATA/chainspec.raw.json
+        [[ ! -f $DATA/inst.wasm ]] && wget $INST_WASM_URL -O $DATA/inst.wasm
+        
+        DATA=$(pwd)/data
+        mkdir -p $DATA/keystore
+
+        alt-verifier key insert --chain=/data/chainspec.raw.json --suri "$PRIVATE_KEY" --keystore-path=/data/keystore --key-type acco --scheme ecdsa
+        alt-verifier test-rollup-challenger \
+        --log="info,rollup-layer1=debug" \
+        --base-path="/data" --keystore-path="/data/keystore" \
+        --chain="/data/chainspec.raw.json" --instruction-wasm-path="/data/inst.wasm" \
+        --chain-id="$L1_CHAINID" --layer1-url=$L1_ENDPOINT \
+        --challenge-contract-address="$L1_CONTRACT" \
+        --submission-contract-address="$L1_CONTRACT" \
+        --l2-bridge-contract-address="$L2_CONTRACT" \
+        --light-node --producer-url="$L2_WS_ENDPOINT" \
+        --fake-total-step 6000 --fake-start-step 5000 \
+        -- --bootnodes=$BOOTNODES
+    
