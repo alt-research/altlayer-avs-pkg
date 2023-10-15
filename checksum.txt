@@ -1,4 +1,4 @@
 e52708ff9e02dedd6bd0be76dbdc4882d81aaa3a658f245afb29dacf4c5e1648  ./pkg/alt-verifier/docker-compose.yml
 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  ./pkg/alt-verifier/.env
 d788dabe953c78439585c7afadf4cd36171039e291e839fa05ea8740475c7ea0  ./pkg/alt-verifier/profile.yml
-e7fd3ff16d88b002e2f937f83a381ac6f1c45c8c23a9c58434b750b698518ed7  ./pkg/manifest.yml
+fe0457a824dc597fc478674732aaf8216d46da024213b93a9ef43a9ed85745cd  ./pkg/manifest.yml
